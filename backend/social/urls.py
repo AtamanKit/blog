@@ -4,6 +4,6 @@ from .views import exchange_facebook_token, exchange_google_token, exchange_gith
 
 urlpatterns = [
     path('auth/facebook/', exchange_facebook_token),
-    path('auth/google/', exchange_google_token),
-    path('auth/github/', exchange_github_token),
+    # path('auth/google/', exchange_google_token),
+    # path('auth/github/', exchange_github_token),
 ]
