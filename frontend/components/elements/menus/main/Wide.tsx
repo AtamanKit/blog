@@ -20,8 +20,8 @@ export function Wide() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-      <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
+        <NavigationMenuItem>
+          <Link href="/" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Blog
             </NavigationMenuLink>

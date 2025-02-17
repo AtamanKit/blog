@@ -1,20 +1,13 @@
-import { Label } from "../elements/Label"
-import { MainMenu } from "../elements/menu/MainMenu"
-import { ThemeToggle } from "../elements/ThemeToggle"
-
+import { Logo } from "@/components/elements/logo/Logo";
+import { MainMenu } from "@/components/elements/menus/main/MainMenu";
+import { LogStyleMenu } from "@/components/elements/menus/logstyle/LogStyleMenu";
 
 export default function HeadBar() {
     return (
-        <div className="flex justify-between items-center w-full">
-            <div className="flex-grow">
-                <Label />
-            </div>
-            <div className="flex-grow text-center">
-                <MainMenu />
-            </div>
-            <div className="flex-grow text-right">
-                <ThemeToggle />
-            </div>
+        <div className="flex justify-between w-full my-8">
+            <Logo />
+            <MainMenu />
+            <LogStyleMenu />
         </div>
     )
 }
