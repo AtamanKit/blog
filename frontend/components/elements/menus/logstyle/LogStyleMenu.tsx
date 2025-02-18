@@ -14,7 +14,6 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { Separator } from "@/components/ui/separator"
 
 import { ThemeToggle } from "@/components/elements/menus/logstyle/ThemeToggle"
 
