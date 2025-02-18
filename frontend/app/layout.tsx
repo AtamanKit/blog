@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import React from 'react';
+import { LogStyleMenu } from "@/components/elements/menus/logstyle/LogStyleMenu";
 
 
 const geistSans = Geist({

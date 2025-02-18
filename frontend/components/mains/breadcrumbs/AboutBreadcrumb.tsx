@@ -14,7 +14,7 @@ import { LogStyleMenu } from "@/components/elements/menus/logstyle/LogStyleMenu"
 export function AboutBreadcrumb() {
     return (
         <main className="flex w-full justify-between mb-8">
-            <Breadcrumb>
+            <Breadcrumb className="flex items-center">
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/">Blog</BreadcrumbLink>
@@ -25,7 +25,7 @@ export function AboutBreadcrumb() {
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
-            <LogStyleMenu />
+            {/* <LogStyleMenu /> */}
         </main>
     )
 }
