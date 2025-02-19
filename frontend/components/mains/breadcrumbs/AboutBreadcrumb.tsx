@@ -25,7 +25,7 @@ export function AboutBreadcrumb() {
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
-            {/* <LogStyleMenu /> */}
+            <LogStyleMenu />
         </main>
     )
 }
