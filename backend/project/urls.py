@@ -20,6 +20,6 @@ from django.urls import path, re_path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/social/', include('social.urls')),
-    # path('api/blog/', include('blog.urls')),
+    path('api/blog/', include('blog.urls')),
     re_path(r'^auth/', include('drf_social_oauth2.urls', namespace='drf')),
 ]

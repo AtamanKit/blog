@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import exchange_facebook_token, exchange_google_token, exchange_github_token
+# from .views import exchange_facebook_token, exchange_google_token, exchange_github_token
+from .views import exchange_facebook_token
 
 
 urlpatterns = [
