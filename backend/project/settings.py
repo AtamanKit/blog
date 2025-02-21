@@ -45,10 +45,11 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
-
     'oauth2_provider',
     'social_django',
     'drf_social_oauth2',
+    'django_cleanup',
+
     'blog',
 ]
 
