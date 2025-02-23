@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/navigation-menu"
 
 import { ThemeToggle } from "@/components/elements/menus/logstyle/ThemeToggle"
+import { PopoverLogin } from "@/components/elements/menus/logstyle/PopoverLogin"
 
 
 export function LogStyleMenu() {
@@ -23,11 +24,9 @@ export function LogStyleMenu() {
         <NavigationMenu>
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <Link href="/" legacyBehavior passHref>
-                        <NavigationMenuLink className={`${navigationMenuTriggerStyle()} border rounded-md`}>
-                            Log In
-                        </NavigationMenuLink>
-                    </Link>
+                    <NavigationMenuLink>
+                        <PopoverLogin />
+                    </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem className="border rounded-md">
                     <ThemeToggle />

@@ -3,6 +3,7 @@ import React from "react";
 
 import HelloWorld from "@/components/mains/HelloWorld";
 import HeadBar from "@/components/mains/HeadBar";
+import Posts from "@/components/mains/Posts";
 
 
 export default function Home() {
@@ -13,7 +14,9 @@ export default function Home() {
           <HeadBar />
         </div>
       </header>
-      <HelloWorld />
+      <section className="container w-full">
+        <Posts />
+      </section>
     </main>
   );
 }

@@ -1,6 +1,5 @@
 import {
     Breadcrumb,
-    BreadcrumbEllipsis,
     BreadcrumbItem,
     BreadcrumbLink,
     BreadcrumbList,
@@ -11,7 +10,7 @@ import {
 import { LogStyleMenu } from "@/components/elements/menus/logstyle/LogStyleMenu"
 
 
-export function AboutBreadcrumb() {
+export function BreadcrumbTemplate({ param }: { param: string }) {
     return (
         <main className="flex w-full justify-between mb-8">
             <Breadcrumb className="flex items-center">
@@ -21,7 +20,7 @@ export function AboutBreadcrumb() {
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbPage>About Me</BreadcrumbPage>
+                        <BreadcrumbPage>{param}</BreadcrumbPage>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>

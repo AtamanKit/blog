@@ -1,11 +1,11 @@
-import { AboutBreadcrumb } from "@/components/mains/breadcrumbs/AboutBreadcrumb";
+import { BreadcrumbTemplate } from "@/components/mains/Breadcrumb";
 import Image from "next/image";
 
 
 export default function AboutPage() {
     return (
         <div className="mx-auto max-md:px-6 py-12">
-            <AboutBreadcrumb />
+            <BreadcrumbTemplate param="About Me" />
             <h1 className="text-4xl font-bold text-center mb-6">Hey there! My name is Rodion Atamaniuc 👋</h1>
             <p className="text-lg text-center mb-8">
                 Full-Stack Developer | Python, JavaScript | DevOps Enthusiast

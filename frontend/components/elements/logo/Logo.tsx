@@ -1,9 +1,11 @@
 import Image from "next/image";
 import { Label } from "@/components/elements/logo/Label";
+import Link  from "next/link";
+
 
 export function Logo() {
     return (
-        <main className="flex flex-col items-center">
+        <Link href="/" className="flex flex-col items-center">
             <Image
                 src="images/svg/ataman.svg"
                 width={30}
@@ -11,6 +13,6 @@ export function Logo() {
                 alt="Ataman logo"
             />
             <Label />
-        </main>
+        </Link>
     )
 }

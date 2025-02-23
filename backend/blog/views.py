@@ -9,6 +9,12 @@ class PostListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.AllowAny]
 
 
+class PostDetailView(generics.RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [permissions.AllowAny]
+
+
 class CommentListCreateView(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
     permission_classes = [permissions.AllowAny]
