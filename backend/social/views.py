@@ -3,7 +3,10 @@ from django.views.decorators.csrf import csrf_exempt
 import requests
 import json
 import os
+from dotenv import load_dotenv
 
+
+load_dotenv('.env.dev')
 
 @csrf_exempt
 def exchange_facebook_token(request):
@@ -39,9 +42,6 @@ def exchange_facebook_token(request):
     if not facebook_access_token:
         return JsonResponse({'error': 'Invalid Facebook access token'}, status=400)
 
-    print("####################################################")
-    print(facebook_access_token)
-    print("####################################################")
 
     # Convert Facebook access token to Django token using drf_social_oauth2
     convert_token_url = request.build_absolute_uri(
@@ -56,6 +56,10 @@ def exchange_facebook_token(request):
     }
 
     token_response = requests.post(convert_token_url, data=convert_payload)
+
+    print("Payload:", convert_payload)
+    print("Headers:", token_response.request.headers)
+    print("Response text:", token_response.text)
 
     if token_response.status_code != 200:
         return JsonResponse(token_response.json(), status=token_response.status_code)
