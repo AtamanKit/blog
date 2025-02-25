@@ -121,6 +121,7 @@ AUTHENTICATION_BACKENDS = (
 
     # drf_social_oauth2
     'drf_social_oauth2.backends.DjangoOAuth2',
+    # 'drf_social_oauth2.backends.DrFSocialOAuth2',
 
     # Django
     'django.contrib.auth.backends.ModelBackend',
@@ -128,10 +129,10 @@ AUTHENTICATION_BACKENDS = (
 
 
 # Facebook configuration
-# SOCIAL_AUTH_FACEBOOK_KEY = os.getenv(
-#     'SOCIAL_AUTH_FACEBOOK_KEY', 'facebook-app-id')
-# SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv(
-#     'SOCIAL_AUTH_FACEBOOK_SECRET', 'facebook-app-secret')
+SOCIAL_AUTH_FACEBOOK_KEY = os.getenv(
+    'SOCIAL_AUTH_FACEBOOK_KEY', 'facebook-app-id')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv(
+    'SOCIAL_AUTH_FACEBOOK_SECRET', 'facebook-app-secret')
 
 # Define SOCIAL_AUTH_FACEBOOK_SCOPE to get extra permissions from Facebook.
 # Email is not sent by default, to get it, you must request the email permission.
@@ -185,3 +186,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = os.getenv(
     'CORS_ORIGIN_ALLOW_ALL', 'True').lower() in ('true', '1')
+
