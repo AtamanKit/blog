@@ -38,7 +38,7 @@ export function FacebookAuthHandler() {
 
             const data = await res.json();
 
-            if (data.success.token) {
+            if (data.access_token) {
                 localStorage.setItem("access_token", data.access_token);
                 alert("Login successful!");
                 router.replace(window.location.pathname);
