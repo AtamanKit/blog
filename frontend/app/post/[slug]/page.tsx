@@ -1,6 +1,6 @@
 import { JSX } from "react";
 
-import { CardTemplate } from "@/components/elements/post/CardTemplate";
+import { CardTemplate } from "@/components/elements/post/CardTempl";
 import { BreadcrumbTemplate } from "@/components/mains/Breadcrumb";
 import { CardInput } from "@/components/elements/comments/CardInput";
 

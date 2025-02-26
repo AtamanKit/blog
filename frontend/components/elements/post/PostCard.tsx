@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { CardTemplate } from "@/components/elements/post/CardTemplate";
+import { CardTempl } from "@/components/elements/post/CardTempl";
 
 
 // Define the shape of the post object
@@ -54,7 +54,7 @@ export function PostCard({ post }: PostCardProps) {
   const truncatedDescription = truncateWords(post.description, wordLimit);
 
   return (
-    <CardTemplate
+    <CardTempl
       post={post}
       truncFunc={truncatedDescription} 
     />

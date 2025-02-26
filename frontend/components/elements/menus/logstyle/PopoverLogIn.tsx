@@ -9,7 +9,7 @@ import { FaGithub } from "react-icons/fa"
 import { FaFacebook } from "react-icons/fa"
 
 
-export function PopoverLogin() {
+export function PopoverLogIn() {
   const handleFacebookLogin = () => {
     const clientId = process.env.NEXT_PUBLIC_FACEBOOK_APP_ID;
     const redirectUri = encodeURIComponent(window.location.href);

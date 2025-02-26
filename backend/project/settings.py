@@ -138,7 +138,7 @@ SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv(
 # Email is not sent by default, to get it, you must request the email permission.
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-    'fields': 'id, name, email'
+    'fields': 'id, name, email',
 }
 
 # REST_FRAMEWORK = {
@@ -186,4 +186,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = os.getenv(
     'CORS_ORIGIN_ALLOW_ALL', 'True').lower() in ('true', '1')
-

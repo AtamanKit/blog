@@ -35,7 +35,7 @@ interface CardTemplateProps {
 }
 
 
-export function CardTemplate({ post, truncFunc }: CardTemplateProps) {
+export function CardTempl({ post, truncFunc }: CardTemplateProps) {
   const pathname = usePathname();
   const postList = !pathname.includes("post");
 

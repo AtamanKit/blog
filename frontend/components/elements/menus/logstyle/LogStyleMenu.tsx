@@ -1,31 +1,37 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
+import * as React from "react";
+import Link from "next/link";
 
 import { cn } from "@/lib/utils"
 // import { Icons } from "@/components/icons"
 import {
     NavigationMenu,
-    NavigationMenuContent,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
-    navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+} from "@/components/ui/navigation-menu";
 
-import { ThemeToggle } from "@/components/elements/menus/logstyle/ThemeToggle"
-import { PopoverLogin } from "@/components/elements/menus/logstyle/PopoverLogin"
+import { ThemeToggle } from "@/components/elements/menus/logstyle/ThemeToggle";
+import { PopoverLogIn } from "@/components/elements/menus/logstyle/PopoverLogIn";
+import { PopoverLogOut } from "@/components/elements/menus/logstyle/PopoverLogOut";
+import { getSocialUser } from "@/utils/socialUser";
 
 
 export function LogStyleMenu() {
+    const socialUser = getSocialUser();
+    
     return (
         <NavigationMenu>
             <NavigationMenuList>
                 <NavigationMenuItem>
                     <NavigationMenuLink>
-                        <PopoverLogin />
+                        {
+                            socialUser?.accessToken 
+                                ? <PopoverLogOut />
+                                : <PopoverLogIn />
+
+                        }
                     </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem className="border rounded-md">

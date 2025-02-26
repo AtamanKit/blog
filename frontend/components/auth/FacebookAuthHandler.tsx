@@ -39,8 +39,15 @@ export function FacebookAuthHandler() {
             const data = await res.json();
 
             if (data.access_token) {
-                localStorage.setItem("access_token", data.access_token);
-                alert("Login successful!");
+                const socialUser = {
+                    accessToken: data.access_token,
+                    email: data.user?.email || "",
+                    userName: `${data.user?.first_name || ""} ${data.user?.last_name || ""}`.trim(),
+                    userPicture: data.user?.picture || "",
+                };
+            
+                localStorage.setItem("socialUser", JSON.stringify(socialUser));
+
                 router.replace(window.location.pathname);
             }
         } catch (error) {
@@ -52,10 +59,14 @@ export function FacebookAuthHandler() {
     };
 
     return (
-        <div>
-            {loading && <div>Loading...</div>}
+        <>
+            {loading && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30">
+                    <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            )}
             {error && <p className="text-red-500">{error}</p>}
-        </div>
-    )
+        </>
+    );
 
 }
