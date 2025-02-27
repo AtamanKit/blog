@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 
 from pathlib import Path
 
-load_dotenv()
+load_dotenv('.env.dev')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -119,9 +119,11 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookAppOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
 
+    # Google  OAuth2
+    'social_core.backends.google.GoogleOAuth2',
+
     # drf_social_oauth2
     'drf_social_oauth2.backends.DjangoOAuth2',
-    # 'drf_social_oauth2.backends.DrFSocialOAuth2',
 
     # Django
     'django.contrib.auth.backends.ModelBackend',
@@ -140,6 +142,19 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'id, name, email',
 }
+
+
+# Google configuration
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv(
+    'SOCIAL_AUTH_GOOGLE_OAUTH2_KEY', 'google-app-id')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv(
+    'SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET', 'google-app-secret')
+
+# Define SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE to get extra permissions from Google.
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+]
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (

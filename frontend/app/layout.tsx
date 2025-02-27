@@ -5,6 +5,7 @@ import React from 'react';
 
 import { ThemeProvider } from "@/context/ThemeContext";
 import { FacebookAuthHandler } from "@/components/auth/FacebookAuthHandler";
+import { GoogleAuthHandler } from "@/components/auth/GoogleAuthHandler";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
