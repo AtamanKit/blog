@@ -17,7 +17,9 @@ def exchange_google_token(request):
 
     data = json.loads(request.body)
     code = data.get("code")
-    redirect_uri = data.get("redirect_uri")  # ✅ Get redirect URI from frontend
+    # redirect_uri = data.get("redirect_uri")  # ✅ Get redirect URI from frontend
+
+    redirect_uri = f'{os.getenv('FRONTEND_URL')}/auth/'
 
     if not code or not redirect_uri:
         return JsonResponse({"error": "Missing parameters"}, status=400)
@@ -48,7 +50,8 @@ def exchange_google_token(request):
     google_profile_url = "https://www.googleapis.com/oauth2/v2/userinfo"
     profile_headers = {"Authorization": f"Bearer {google_access_token}"}
 
-    profile_response = requests.get(google_profile_url, headers=profile_headers)
+    profile_response = requests.get(
+        google_profile_url, headers=profile_headers)
     profile_data = profile_response.json()
 
     # Extract user details
@@ -61,8 +64,8 @@ def exchange_google_token(request):
 
     convert_payload = {
         "grant_type": "convert_token",
-        "client_id": os.getenv("OAUTH2_CLIENT_ID"),
-        "client_secret": os.getenv("OAUTH2_CLIENT_SECRET"),
+        "client_id": os.getenv("OAUTH2_GOOGLE_CLIENT_ID"),
+        "client_secret": os.getenv("OAUTH2_GOOGLE_CLIENT_SECRET"),
         "backend": "google-oauth2",
         "token": google_access_token,
     }
@@ -74,7 +77,8 @@ def exchange_google_token(request):
         return JsonResponse(token_data, status=token_response.status_code)
 
     # Inject Google profile data into the Django token response
-    token_data["user"] = {
+    token_data = {
+        "access_token": token_data.get('access_token'),
         "email": google_email,
         "name": google_name,
         "picture": google_picture,

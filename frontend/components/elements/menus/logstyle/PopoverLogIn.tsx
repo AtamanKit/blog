@@ -1,12 +1,15 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { FcGoogle } from "react-icons/fc"
-import { FaGithub } from "react-icons/fa"
-import { FaFacebook } from "react-icons/fa"
+} from "@/components/ui/popover";
+
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
+
+import { getFrontendUrl } from "@/utils/getBaseUrl";
 
 
 export function PopoverLogIn() {
@@ -14,9 +17,7 @@ export function PopoverLogIn() {
     let clientId;
     let authUrl;
 
-    const redirectUri = encodeURIComponent(window.location.href);
-
-    console.log("Redirect URI:", redirectUri);
+    const redirectUri = encodeURIComponent(`${getFrontendUrl()}/auth/`);
 
     if (provider === "facebook") {
       clientId = process.env.NEXT_PUBLIC_FACEBOOK_APP_ID;
@@ -27,7 +28,10 @@ export function PopoverLogIn() {
     }
 
     // console.log(`Logging in with ${provider}:`, clientId, redirectUri);
-    
+
+    // localStorage.setItem("authProvider", provider);
+    localStorage.setItem("socialUser", JSON.stringify({ provider, afterLoginUrl: window.location.href }));
+
     if (authUrl) {
       window.location.href = authUrl;
     }
@@ -41,9 +45,9 @@ export function PopoverLogIn() {
       <PopoverContent className="w-80">
         <ul className="space-y-4 flex flex-col items-center">
           <li className="w-full px-4">
-            <Button 
+            <Button
               onClick={() => handleLogin("google")}
-              variant="outline" 
+              variant="outline"
               className="w-full"
             >
               <FcGoogle className="inline-block mr-2" />

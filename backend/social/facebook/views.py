@@ -17,7 +17,8 @@ def exchange_facebook_token(request):
 
     data = json.loads(request.body)
     code = data.get('code')
-    redirect_uri = data.get('redirect_uri')
+    # provider = data.get('provider')
+    redirect_uri = f'{os.getenv('FRONTEND_URL')}/auth/'
 
     if not code:
         return JsonResponse({'error': 'Missing Facebook access token'}, status=400)
@@ -53,7 +54,8 @@ def exchange_facebook_token(request):
     profile_data = profile_response.json()
 
     # Extract user details
-    facebook_picture = profile_data.get('picture', {}).get('data', {}).get('url')
+    facebook_picture = profile_data.get(
+        'picture', {}).get('data', {}).get('url')
     facebook_email = profile_data.get('email')
     facebook_name = profile_data.get('name')
 
@@ -76,8 +78,11 @@ def exchange_facebook_token(request):
         return JsonResponse(token_data, status=token_response.status_code)
 
     # Inject Facebook profile data into the Django token response
-    token_data['user']['email'] = facebook_email
-    token_data['user']['name'] = facebook_name
-    token_data['user']['picture'] = facebook_picture
+    token_data = {
+        "access_token": token_data.get('access_token'),
+        "email": facebook_email,
+        "name": facebook_name,
+        "picture": facebook_picture,
+    }
 
     return JsonResponse(token_data)

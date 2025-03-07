@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { CardTempl } from "@/components/elements/post/CardTempl";
-
+import { SkeletonPost } from "@/components/elements/skeletons/SkeletonPost";
 
 // Define the shape of the post object
 interface Post {
@@ -13,17 +13,17 @@ interface Post {
 
 // A helper function to truncate text to a given number of words
 function truncateWords(text: string, wordLimit: number): string {
-    const words = text.split(" ");
-    if (words.length <= wordLimit) return text;
-    return words.slice(0, wordLimit).join(" ") + "...";
-  }
-  
+  const words = text.split(" ");
+  if (words.length <= wordLimit) return text;
+  return words.slice(0, wordLimit).join(" ") + "...";
+}
+
 // Custom hook to get current window width (works only in the browser)
 function useScreenWidth(): number {
   const [width, setWidth] = React.useState(
     typeof window !== "undefined" ? window.innerWidth : 0
   );
-  
+
   React.useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -40,7 +40,7 @@ interface PostCardProps {
 
 
 export function PostCard({ post }: PostCardProps) {
-    const width = useScreenWidth();
+  const width = useScreenWidth();
 
   // Define word limits based on screen width.
   // For example: small screens show fewer words, larger screens show more.
@@ -53,10 +53,14 @@ export function PostCard({ post }: PostCardProps) {
 
   const truncatedDescription = truncateWords(post.description, wordLimit);
 
+  if (!post) {
+    return <SkeletonPost />;
+  }
+
   return (
     <CardTempl
       post={post}
-      truncFunc={truncatedDescription} 
+      truncFunc={truncatedDescription}
     />
   )
 }

@@ -25,13 +25,13 @@ export function AuthHandler({ provider, apiEndpoint }: AuthHandlerProps) {
     const exchangeCodeForToken = async (code: string) => {
         setLoading(true);
         try {
-            const redirectUri = window.location.href.split("?")[0];
+            const afterLoginUrl = localStorage.getItem("socialUser") ? JSON.parse(localStorage.getItem("socialUser")!).afterLoginUrl : "/";
             const res = await fetch(`${getBackendUrl()}${apiEndpoint}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ code, redirect_uri: redirectUri }),
+                body: JSON.stringify({ code }),
             });
 
             if (!res.ok) {
@@ -43,14 +43,15 @@ export function AuthHandler({ provider, apiEndpoint }: AuthHandlerProps) {
             if (data.access_token) {
                 const socialUser = {
                     accessToken: data.access_token,
-                    email: data.user?.email || "",
-                    userName: data.user?.name || "",
-                    userPicture: data.user?.picture || "",
+                    email: data.email || "",
+                    userName: data.name || "",
+                    userPicture: data.picture || "",
+                    provider: provider,
                 };
 
                 localStorage.setItem("socialUser", JSON.stringify(socialUser));
 
-                router.replace(window.location.pathname);
+                router.replace(afterLoginUrl);
             }
         } catch (error) {
             console.error(`Login failed for ${provider}`, error);

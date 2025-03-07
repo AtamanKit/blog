@@ -4,8 +4,7 @@ import "./globals.css";
 import React from 'react';
 
 import { ThemeProvider } from "@/context/ThemeContext";
-import { FacebookAuthHandler } from "@/components/auth/FacebookAuthHandler";
-import { GoogleAuthHandler } from "@/components/auth/GoogleAuthHandler";
+import { AuthHandlerWrapper } from "@/components/auth/AuthHandlerWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased container mx-auto`}
       >
-        <FacebookAuthHandler />
+        <AuthHandlerWrapper />
         <main>
           <ThemeProvider>
             {children}

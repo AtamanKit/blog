@@ -2,12 +2,22 @@
 
 
 import { useEffect, useState } from "react";
-import { PostCard } from "@/components/elements/post/PostCard";
 
+import { PostCard } from "@/components/elements/post/PostCard";
+import { SkeletonPosts } from "@/components/elements/skeletons/SkeletonPosts";
+
+
+interface Post {
+    id: number;
+    title: string;
+    image: string;
+    description: string;
+    [key: string]: any;
+}
 
 export default function Posts() {
-    const [posts, setPosts] = useState([]);
-    
+    const [posts, setPosts] = useState<Post[]>([]);
+
     useEffect(() => {
         fetch("http://localhost:8000/api/blog/posts")
             .then((res) => res.json())
@@ -16,9 +26,13 @@ export default function Posts() {
 
     return (
         <div className="container mx-auto">
-            {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
-            ))}
+            {
+                posts.length !== 0
+                    ? posts.map((post) => (
+                        <PostCard key={post.id} post={post} />
+                    ))
+                    : <SkeletonPosts />
+            }
         </div>
     )
 }
