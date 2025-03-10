@@ -2,7 +2,9 @@ import { JSX } from "react";
 
 import { CardTempl } from "@/components/elements/post/CardTempl";
 import { BreadcrumbTemplate } from "@/components/mains/Breadcrumb";
-import { CardInput } from "@/components/elements/comments/CardInput";
+import { CardComment } from "@/components/elements/comments/CardComment";
+import { Skeleton } from "@/components/ui/skeleton";
+import { SkeletonPost } from "@/components/elements/skeletons/SkeletonPost";
 
 
 interface Post {
@@ -38,9 +40,15 @@ export default async function Post({ params }: { params: Params }): Promise<JSX.
 
   return (
     <main className="py-8">
-      <BreadcrumbTemplate param={post.title} />
-      <CardTempl post={post} />
-      <CardInput post={post} />
+      {post ? (
+        <div>
+          <BreadcrumbTemplate param={post.title} />
+          <CardTempl post={post} />
+          <CardComment post={post} />
+        </div>
+      ) : (
+        <SkeletonPost />
+      )}
     </main>
   );
 }

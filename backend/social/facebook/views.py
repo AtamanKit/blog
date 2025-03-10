@@ -41,6 +41,8 @@ def exchange_facebook_token(request):
 
     facebook_access_token = facebook_data.get('access_token')
 
+    print('##### facebook_access_token', facebook_access_token)
+
     if not facebook_access_token:
         return JsonResponse({'error': 'Invalid Facebook access token'}, status=400)
 

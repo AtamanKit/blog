@@ -53,9 +53,9 @@ export function PostCard({ post }: PostCardProps) {
 
   const truncatedDescription = truncateWords(post.description, wordLimit);
 
-  if (!post) {
-    return <SkeletonPost />;
-  }
+  // if (!post) {
+  //   return <SkeletonPost />;
+  // }
 
   return (
     <CardTempl

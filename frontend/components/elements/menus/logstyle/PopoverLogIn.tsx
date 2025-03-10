@@ -13,7 +13,7 @@ import { getFrontendUrl } from "@/utils/getBaseUrl";
 
 
 export function PopoverLogIn() {
-  const handleLogin = (provider: "facebook" | "google") => {
+  const handleLogin = (provider: "facebook" | "google" | "github") => {
     let clientId;
     let authUrl;
 
@@ -25,6 +25,9 @@ export function PopoverLogIn() {
     } else if (provider === "google") {
       clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
       authUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=email profile&response_type=code`;
+    } else if (provider === "github") {
+      clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+      authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user:email`;
     }
 
     // console.log(`Logging in with ${provider}:`, clientId, redirectUri);
@@ -55,7 +58,10 @@ export function PopoverLogIn() {
             </Button>
           </li>
           <li className="w-full px-4">
-            <Button className="w-full">
+            <Button
+              onClick={() => handleLogin("github")}
+              className="w-full"
+            >
               <FaGithub className="inline-block mr-2" />
               GitHub
             </Button>

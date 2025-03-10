@@ -122,6 +122,9 @@ AUTHENTICATION_BACKENDS = (
     # Google  OAuth2
     'social_core.backends.google.GoogleOAuth2',
 
+    # GitHub OAuth2
+    'social_core.backends.github.GithubOAuth2',
+
     # drf_social_oauth2
     'drf_social_oauth2.backends.DjangoOAuth2',
 
@@ -155,6 +158,15 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/userinfo.profile',
 ]
+
+# GitHub OAuth2 configuration
+SOCIAL_AUTH_GITHUB_KEY = os.getenv(
+    'SOCIAL_AUTH_GITHUB_KEY', 'github-client-id')
+SOCIAL_AUTH_GITHUB_SECRET = os.getenv(
+    'SOCIAL_AUTH_GITHUB_SECRET', 'github-client-secret')
+
+# Define GitHub OAuth scopes
+SOCIAL_AUTH_GITHUB_SCOPE = ['user:email']
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -201,3 +213,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = os.getenv(
     'CORS_ORIGIN_ALLOW_ALL', 'True').lower() in ('true', '1')
+
+
+# SOCIAL_AUTH_PIPELINE = (
+#     'social_core.pipeline.social_auth.social_details',
+#     'social_core.pipeline.social_auth.social_uid',
+#     'social_core.pipeline.social_auth.auth_allowed',
+#     'social_core.pipeline.social_auth.social_user',
+#     'social_core.pipeline.user.get_username',
+#     'social_core.pipeline.user.create_user',
+#     'backend.blog.pipeline.save_profile_picture',
+#     'social_core.pipeline.social_auth.associate_user',
+#     'social_core.pipeline.social_auth.load_extra_data',
+#     'social_core.pipeline.user.user_details',
+# )

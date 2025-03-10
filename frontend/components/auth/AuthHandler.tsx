@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getBackendUrl } from "@/utils/getBaseUrl";
 
 interface AuthHandlerProps {
-    provider: "facebook" | "google";
+    provider: "facebook" | "google" | "github";
     apiEndpoint: string; // Example: "/api/social/facebook/auth/facebook/"
 }
 
@@ -23,6 +23,7 @@ export function AuthHandler({ provider, apiEndpoint }: AuthHandlerProps) {
     }, [searchParams]);
 
     const exchangeCodeForToken = async (code: string) => {
+        console.log(`Exchanging code for token for ${provider}`);
         setLoading(true);
         try {
             const afterLoginUrl = localStorage.getItem("socialUser") ? JSON.parse(localStorage.getItem("socialUser")!).afterLoginUrl : "/";

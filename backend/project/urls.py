@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/social/facebook/', include('social.facebook.urls')),
     path('api/social/google/', include('social.google.urls')),
+    path('api/social/github/', include('social.github.urls')),
     path('api/blog/', include('blog.urls')),
     re_path(r'^auth/', include('drf_social_oauth2.urls', namespace='drf')),
 ]
