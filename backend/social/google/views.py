@@ -1,5 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+# from django.contrib.auth import get_user_model
+# from blog.models import UserProfile
 import requests
 import json
 import os
@@ -7,6 +9,8 @@ from dotenv import load_dotenv
 
 
 load_dotenv('.env.dev')
+
+# User = get_user_model()
 
 
 @csrf_exempt
@@ -75,6 +79,18 @@ def exchange_google_token(request):
 
     if token_response.status_code != 200:
         return JsonResponse(token_data, status=token_response.status_code)
+    
+    # user = User.objects.filter(email=google_email).first()  # ✅ Get the first user safely
+    # user = token_data.get('user')
+
+    # if not user:
+    #     return JsonResponse({'error': 'User not found after authentication'}, status=400)
+
+    # # ✅ Ensure user profile exists and update picture
+    # profile, _ = UserProfile.objects.get_or_create(user=user)
+    # if google_picture and profile.profile_picture != google_picture:
+    #     profile.profile_picture = google_picture
+    #     profile.save()
 
     # Inject Google profile data into the Django token response
     token_data = {

@@ -11,13 +11,6 @@ class PostSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = '__all__'
-        read_only_fields = ['user', 'post']
-
-
 class UserSerializer(serializers.ModelSerializer):
     profile_picture = serializers.SerializerMethodField()
 
@@ -29,3 +22,12 @@ class UserSerializer(serializers.ModelSerializer):
         if hasattr(obj, 'profile') and obj.profile.profile_picture:
             return obj.profile.profile_picture
         return None
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    
+    class Meta:
+        model = Comment
+        fields = '__all__'
+        read_only_fields = ['user', 'post']

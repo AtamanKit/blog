@@ -32,4 +32,3 @@ def save_profile_picture(backend, user, response, *args, **kwargs):
     except Exception as e:
         import traceback
         print("Error in save_profile_picture:", traceback.format_exc())
-

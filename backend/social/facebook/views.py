@@ -1,5 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+# from django.contrib.auth import get_user_model
+# from blog.models import UserProfile
 import requests
 import json
 import os
@@ -7,6 +9,8 @@ from dotenv import load_dotenv
 
 
 load_dotenv('.env.dev')
+
+# User = get_user_model()
 
 
 @csrf_exempt
@@ -40,8 +44,6 @@ def exchange_facebook_token(request):
         return JsonResponse(facebook_data, status=response.status_code)
 
     facebook_access_token = facebook_data.get('access_token')
-
-    print('##### facebook_access_token', facebook_access_token)
 
     if not facebook_access_token:
         return JsonResponse({'error': 'Invalid Facebook access token'}, status=400)
@@ -78,6 +80,18 @@ def exchange_facebook_token(request):
 
     if token_response.status_code != 200:
         return JsonResponse(token_data, status=token_response.status_code)
+    
+    # user = User.objects.filter(email=facebook_email).first()  # ✅ Get the first user safely
+    # user = token_data.get('user')
+
+    # if not user:
+    #     return JsonResponse({'error': 'User not found after authentication'}, status=400)
+
+    # # Save or update profile picture
+    # profile, _ = UserProfile.objects.get_or_create(user=user)
+    # if facebook_picture and profile.profile_picture != facebook_picture:
+    #     profile.profile_picture = facebook_picture
+    #     profile.save()
 
     # Inject Facebook profile data into the Django token response
     token_data = {

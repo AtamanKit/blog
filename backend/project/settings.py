@@ -114,6 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# drf_social_oauth2 settings
 AUTHENTICATION_BACKENDS = (
     # Facebook OAuth2
     'social_core.backends.facebook.FacebookAppOAuth2',
@@ -133,6 +134,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
+# drf_social_oauth2 settings
 # Facebook configuration
 SOCIAL_AUTH_FACEBOOK_KEY = os.getenv(
     'SOCIAL_AUTH_FACEBOOK_KEY', 'facebook-app-id')
@@ -141,9 +143,9 @@ SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv(
 
 # Define SOCIAL_AUTH_FACEBOOK_SCOPE to get extra permissions from Facebook.
 # Email is not sent by default, to get it, you must request the email permission.
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'public_profile']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-    'fields': 'id, name, email',
+    'fields': 'id, name, email, picture.type(large)',
 }
 
 

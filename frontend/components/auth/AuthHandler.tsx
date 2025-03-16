@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getBackendUrl } from "@/utils/getBaseUrl";
 
 interface AuthHandlerProps {
@@ -14,16 +14,17 @@ export function AuthHandler({ provider, apiEndpoint }: AuthHandlerProps) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const hasExchangeCode = useRef(false); // To prevent multiple code exchange calls
 
     useEffect(() => {
         const code = searchParams.get("code");
-        if (code) {
+        if (code && !hasExchangeCode.current) {
+            hasExchangeCode.current = true; // Prevent multiple code exchange calls
             exchangeCodeForToken(code);
         }
     }, [searchParams]);
 
     const exchangeCodeForToken = async (code: string) => {
-        console.log(`Exchanging code for token for ${provider}`);
         setLoading(true);
         try {
             const afterLoginUrl = localStorage.getItem("socialUser") ? JSON.parse(localStorage.getItem("socialUser")!).afterLoginUrl : "/";

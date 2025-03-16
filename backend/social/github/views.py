@@ -1,11 +1,15 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+# from django.contrib.auth import get_user_model
+# from blog.models import UserProfile
 import requests
 import json
 import os
 from dotenv import load_dotenv
 
 load_dotenv('.env.dev')
+
+# User = get_user_model()
 
 
 @csrf_exempt
@@ -51,6 +55,9 @@ def exchange_github_token(request):
         github_profile_url, headers=profile_headers)
     profile_data = profile_response.json()
 
+    if profile_response.status_code != 200:
+        return JsonResponse(profile_data, status=profile_response.status_code)
+
     # Extract user details
     github_picture = profile_data.get("avatar_url")
     # GitHub email may be None if private
@@ -65,10 +72,26 @@ def exchange_github_token(request):
         email_data = email_response.json()
 
         # Get the primary email
+        # github_email = next(
+        #     (email["email"]
+        #      for email in email_data if email.get("primary", False)), None
+        # )
+
+        # Ensure email_data is a valid JSON list before iterating
+        if isinstance(email_data, str):  
+            try:
+                email_data = json.loads(email_data)  # ✅ Convert string to list
+            except json.JSONDecodeError:
+                return JsonResponse({'error': 'Invalid email data format from GitHub'}, status=400)
+
+        # Now process the list safely
         github_email = next(
             (email["email"]
-             for email in email_data if email.get("primary", False)), None
+            for email in email_data if isinstance(email, dict) and email.get("primary", False)), None
         )
+
+        if not github_email:
+            return JsonResponse({'error': 'No primary email found in GitHub response'}, status=400)
 
     # Convert GitHub access token to Django token using drf_social_oauth2
     convert_token_url = request.build_absolute_uri("/auth/convert-token/")
@@ -86,6 +109,19 @@ def exchange_github_token(request):
 
     if token_response.status_code != 200:
         return JsonResponse(token_data, status=token_response.status_code)
+
+    # user = User.objects.filter(email=github_email).first()  # ✅ Get the first user safely
+    # user = token_data.get('user')
+
+    # if not user:
+    #     return JsonResponse({'error': 'User not found after authentication'}, status=400)
+
+    # # ✅ Ensure user profile exists and update picture
+    # profile, _ = UserProfile.objects.get_or_create(user=user)
+    # if github_picture and profile.profile_picture != github_picture:
+    #     profile.profile_picture = github_picture
+    #     profile.save()
+
 
     # Inject GitHub profile data into the Django token response
     token_data = {
