@@ -5,6 +5,7 @@ import { BreadcrumbTemplate } from "@/components/mains/Breadcrumb";
 import { CardComment } from "@/components/elements/comments/CardComment";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SkeletonPost } from "@/components/elements/skeletons/SkeletonPost";
+import CardComments from "@/components/elements/comments/CardComments";
 
 
 interface Post {
@@ -45,6 +46,7 @@ export default async function Post({ params }: { params: Params }): Promise<JSX.
           <BreadcrumbTemplate param={post.title} />
           <CardTempl post={post} />
           <CardComment post={post} />
+          <CardComments postId={post.id} />
         </div>
       ) : (
         <SkeletonPost />
