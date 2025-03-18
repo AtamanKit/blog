@@ -17,7 +17,13 @@ class PostDetailView(generics.RetrieveAPIView):
 
 class CommentListCreateView(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
-    permission_classes = [permissions.IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            self.permission_classes = [permissions.IsAuthenticated]
+        else:
+            self.permission_classes = [permissions.AllowAny]
+        return super().get_permissions()
 
     def get_queryset(self):
         post_id = self.kwargs['post_id']

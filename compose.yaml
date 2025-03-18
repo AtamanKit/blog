@@ -1,0 +1,35 @@
+services:
+  api:
+    build: ./backend
+    command: uv run manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/.env.dev
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+
+  web:
+    build: ./frontend
+    command: npm run dev
+    volumes:
+      - ./frontend:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - api
+
+  db:
+    image: postgres:17-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: blog
+      POSTGRES_USER: bloguser
+      POSTGRES_PASSWORD: blogpassword
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+volumes:
+  postgres_data:

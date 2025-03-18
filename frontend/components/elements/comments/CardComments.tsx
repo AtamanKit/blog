@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState, useEffect } from "react";
 import {
     Card,
@@ -11,6 +10,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
+import SkeletonComments from "@/components/elements/skeletons/SkeletonComments"
 
 interface Comment {
     id: number;
@@ -25,7 +25,6 @@ interface Comment {
     };
 }
 
-
 export default function CardComments({ postId }: { postId: string }) {
     const [comments, setComments] = useState<Comment[]>([]);
     const [loading, setLoading] = useState(true);
@@ -34,20 +33,12 @@ export default function CardComments({ postId }: { postId: string }) {
     useEffect(() => {
         const fetchComments = async () => {
             try {
-                const socialUser = localStorage.getItem("socialUser");
-                if (!socialUser) {
-                    setError("User is not uthenticated");
-                    return;
-                }
-
-                const { accessToken } = JSON.parse(socialUser);
-
                 const res = await fetch(
                     `http://localhost:8000/api/blog/posts/${postId}/comments/`,
                     {
                         method: "GET",
                         headers: {
-                            "Authorization": `Bearer ${accessToken}`,
+                            // "Authorization": `Bearer ${accessToken}`,
                             "Accept": "application/json",
                         },
                     }
@@ -77,7 +68,11 @@ export default function CardComments({ postId }: { postId: string }) {
             </CardHeader>
             <CardContent>
                 {loading ? (
-                    <p>Loading comments...</p>
+                    <div className="space-y-4">
+                        {Array.from({ length: 10 }).map((_, index) => (
+                            <SkeletonComments key={index} />
+                        ))}
+                    </div>
                 ) : error ? (
                     <p className="text-red-500">{error}</p>
                 ) : comments.length > 0 ? (
