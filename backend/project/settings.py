@@ -31,6 +31,13 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'mine-secret-key^')
 DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1')
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',') + ['testserver']
+# ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = [
+#     "localhost",
+#     "127.0.0.1",
+#     "api_ps",  # Add your backend container name
+#     "api_ps:8000",  # Add explicitly for Docker
+# ]
 
 
 # Application definition
@@ -95,7 +102,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 #     }
 # }
 
-DATBASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('POSTGRES_DB', 'postgres'),

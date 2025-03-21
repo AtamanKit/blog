@@ -1,6 +1,9 @@
 from rest_framework import generics, permissions, response, views
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer, UserSerializer
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class PostListCreateView(generics.ListCreateAPIView):
@@ -31,8 +34,11 @@ class CommentListCreateView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         post_id = self.kwargs['post_id']
+        logger.debug(f"Attempting to create comment for post_id: {post_id}")
         post = Post.objects.get(id=post_id)
+        logger.debug(f"Post found: {post}")
         serializer.save(user=self.request.user, post=post)
+        logger.debug("Comment created successfully")
 
 
 class UserProfileView(views.APIView):

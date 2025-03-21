@@ -1,6 +1,7 @@
 services:
   api:
     build: ./backend
+    container_name: api-ps
     command: uv run manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/app
@@ -13,6 +14,7 @@ services:
 
   web:
     build: ./frontend
+    container_name: web-ps
     command: npm run dev
     volumes:
       - ./frontend:/app
@@ -23,6 +25,7 @@ services:
 
   db:
     image: postgres:17-alpine
+    container_name: db-ps
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:

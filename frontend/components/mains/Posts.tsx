@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { PostCard } from "@/components/elements/post/PostCard";
 import { SkeletonPosts } from "@/components/elements/skeletons/SkeletonPosts";
+import { getBackendUrl } from "@/utils/getBaseUrl";
 
 
 interface Post {
@@ -19,7 +20,7 @@ export default function Posts() {
     const [posts, setPosts] = useState<Post[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:8000/api/blog/posts")
+        fetch(`${getBackendUrl()}/api/blog/posts`)
             .then((res) => res.json())
             .then((data) => setPosts(data));
     }, []);

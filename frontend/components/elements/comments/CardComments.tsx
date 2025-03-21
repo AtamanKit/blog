@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card"
 
 import SkeletonComments from "@/components/elements/skeletons/SkeletonComments"
+import { getBackendUrl } from "@/utils/getBaseUrl";
 
 interface Comment {
     id: number;
@@ -34,7 +35,7 @@ export default function CardComments({ postId }: { postId: string }) {
         const fetchComments = async () => {
             try {
                 const res = await fetch(
-                    `http://localhost:8000/api/blog/posts/${postId}/comments/`,
+                    `${getBackendUrl()}/api/blog/posts/${postId}/comments/`,
                     {
                         method: "GET",
                         headers: {

@@ -9,9 +9,15 @@ export const getFrontendUrl = () => {
 
 export const getBackendUrl = () => {
     if (process.env.NODE_ENV === "development") {
-        return "http://localhost:8000";
+        if (typeof window !== "undefined") {
+            // Browser-side request (Client Component)
+            return "http://localhost:8000";
+        } else {
+            // Server-side request (Next.js inside Docker)
+            return "http://api-ps:8000";
+        }
     }
 
-    return "https://api.ataman.dev";
+    return "https://ataman.dev";
 }
 

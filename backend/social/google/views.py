@@ -16,6 +16,9 @@ load_dotenv('.env.dev')
 @csrf_exempt
 def exchange_google_token(request):
     """Handles Google OAuth token exchange."""
+
+    print("####################################")
+
     if request.method != "POST":
         return JsonResponse({"error": "Invalid request"}, status=400)
 
@@ -79,7 +82,7 @@ def exchange_google_token(request):
 
     if token_response.status_code != 200:
         return JsonResponse(token_data, status=token_response.status_code)
-    
+
     # user = User.objects.filter(email=google_email).first()  # ✅ Get the first user safely
     # user = token_data.get('user')
 

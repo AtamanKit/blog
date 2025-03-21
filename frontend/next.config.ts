@@ -4,7 +4,7 @@ import { getFrontendUrl } from "@/utils/getBaseUrl";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["localhost"], // ✅ Allow images from Django backend
+    domains: ["localhost", "api-ps"], // ✅ Allow images from Django backend
   },
   env: {
     NEXT_PUBLIC_FACEBOOK_APP_ID: "1425931387716032",
