@@ -1,0 +1,42 @@
+# Stage 1: Install dependencies
+FROM node:23-bookworm-slim AS deps
+
+# Set working directory
+WORKDIR /app
+
+# Copy dependency files
+COPY package.json package-lock.json ./
+
+# Install only production dependencies
+RUN npm install --frozen-lockfile
+
+# Stage 2: Build the application
+FROM node:23-bookworm-slim AS builder
+
+WORKDIR /app
+
+# Copy installed deps and the app code
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+# Build the Next.js app
+RUN npm run build
+
+# Stage 3: Run the app with only necessary files
+FROM node:23-bookworm-slim AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+# Copy built assets from builder
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/node_modules ./node_modules
+
+# Expose port (Next.js default)
+EXPOSE 3000
+
+# Start the production server
+CMD ["npm", "run", "start"]

@@ -1,6 +1,7 @@
-backend/.venv
-backend/.env.dev
-backend/db.sqlite3
+.venv
+.env.dev
+.env.prod
+db.sqlite3
 
 # Ignore __pycache__ directories
 **/__pycache__/

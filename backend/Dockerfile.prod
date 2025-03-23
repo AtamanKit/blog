@@ -1,0 +1,26 @@
+# Base image with Python
+FROM python:3.13-slim
+
+# ✅ Copy 'uv' binary into the image
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+# ✅ Set environment variable for unbuffered logs
+ENV PYTHONUNBUFFERED=1
+
+# ✅ Set working directory
+WORKDIR /app
+
+# ✅ Copy only dependency files first (for caching)
+COPY pyproject.toml uv.lock /app/
+
+# ✅ Install dependencies using uv
+RUN uv sync --frozen --no-cache
+
+# ✅ Copy the rest of the application
+COPY . /app
+
+# ✅ Set environment to production
+ENV DJANGO_SETTINGS_MODULE=project.settings
+
+# ✅ Collect static files
+RUN uv run python manage.py collectstatic --noinput
