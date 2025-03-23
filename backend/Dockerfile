@@ -1,11 +1,16 @@
-FROM python:3.12-slim
+FROM python:3.13-slim
 
-# Install uv.
+# ✅ Copy the 'uv' binary into the image
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Copy the application into the container.
+# ✅ Set working directory
+WORKDIR /app
+
+# ✅ Ensure unbuffered output from Python
+ENV PYTHONUNBUFFERED=1
+
+# ✅ Copy source code after WORKDIR is set
 COPY . /app
 
-# Install the application dependencies.
-WORKDIR /app
+# ✅ Install dependencies from uv.lock / pyproject.toml
 RUN uv sync --frozen --no-cache

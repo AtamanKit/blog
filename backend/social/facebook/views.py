@@ -75,12 +75,14 @@ def exchange_facebook_token(request):
         'token': facebook_access_token,
     }
 
+    print("#################### convert_payload", convert_payload)
+
     token_response = requests.post(convert_token_url, data=convert_payload)
     token_data = token_response.json()
 
     if token_response.status_code != 200:
         return JsonResponse(token_data, status=token_response.status_code)
-    
+
     # user = User.objects.filter(email=facebook_email).first()  # ✅ Get the first user safely
     # user = token_data.get('user')
 

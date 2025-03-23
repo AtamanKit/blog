@@ -17,8 +17,6 @@ load_dotenv('.env.dev')
 def exchange_google_token(request):
     """Handles Google OAuth token exchange."""
 
-    print("####################################")
-
     if request.method != "POST":
         return JsonResponse({"error": "Invalid request"}, status=400)
 
