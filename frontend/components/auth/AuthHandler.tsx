@@ -27,7 +27,18 @@ export function AuthHandler({ provider, apiEndpoint }: AuthHandlerProps) {
     const exchangeCodeForToken = async (code: string) => {
         setLoading(true);
         try {
-            const afterLoginUrl = localStorage.getItem("socialUser") ? JSON.parse(localStorage.getItem("socialUser")!).afterLoginUrl : "/";
+            // const afterLoginUrl = localStorage.getItem("socialUser") ? JSON.parse(localStorage.getItem("socialUser")!).afterLoginUrl : "/";
+
+            let afterLoginUrl = "/";
+
+            if (typeof window !== "undefined") {
+                const raw = localStorage.getItem("socialUser");
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    afterLoginUrl = parsed.afterLoginUrl || "/";
+                }
+            }
+            
             const res = await fetch(`${getBackendUrl()}${apiEndpoint}`, {
                 method: "POST",
                 headers: {
@@ -42,7 +53,7 @@ export function AuthHandler({ provider, apiEndpoint }: AuthHandlerProps) {
 
             const data = await res.json();
 
-            if (data.access_token) {
+            if (data.access_token && typeof window !== "undefined") {
                 const socialUser = {
                     accessToken: data.access_token,
                     email: data.email || "",

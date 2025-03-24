@@ -16,6 +16,7 @@ load_dotenv('.env.dev')
 @csrf_exempt
 def exchange_google_token(request):
     """Handles Google OAuth token exchange."""
+    print("################################")
 
     if request.method != "POST":
         return JsonResponse({"error": "Invalid request"}, status=400)

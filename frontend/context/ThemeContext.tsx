@@ -13,6 +13,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [isDark, setIsDark] = useState<boolean | null>(null); // Prevent hydration issues
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    
     const storedTheme = localStorage.getItem("theme");
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     
@@ -28,7 +30,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (isDark === null) return; // Prevent premature theme setting
+    if (typeof window === "undefined" || isDark === null) return; // Prevent premature theme setting
 
     if (isDark) {
       document.documentElement.classList.add("dark");

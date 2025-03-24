@@ -6,6 +6,8 @@ export function useDarkMode() {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    
     const storedTheme = localStorage.getItem("theme");
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
@@ -17,6 +19,8 @@ export function useDarkMode() {
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    
     if (isDark) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");

@@ -35,6 +35,11 @@ export function CardComment({ post }: CardCommentProps) {
   const router = useRouter();
 
   const handleCommentSubmit = async () => {
+    if (typeof window === "undefined") {
+      setError("Browser environment not detected.");
+      return;
+    }
+    
     const socialUserString = localStorage.getItem("socialUser");
 
     if (!socialUserString) {

@@ -4,11 +4,19 @@ services:
       context: ./backend
       dockerfile: Dockerfile.prod
     container_name: api-ps
-    command: gunicorn api.wsgi:application --bind 0.0.0.0:8000
+    command: uv run gunicorn project.wsgi:application --bind 0.0.0.0:8000 --access-logfile - --error-logfile -
     env_file:
       - ./backend/.env.prod
     ports:
       - 8000:8000
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     depends_on:
       - db
 
@@ -25,13 +33,16 @@ services:
   db:
     image: postgres:17-alpine
     container_name: db-ps
+    restart: unless-stopped
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: blog
-      POSTGRES_USER: bloguser
-      POSTGRES_PASSWORD: blogpassword
-      POSTGRES_HOST_AUTH_METHOD: trust
+    env_file:
+      - ./backend/.env.prod
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   nginx:
     image: nginx:1.27-alpine
@@ -43,6 +54,10 @@ services:
       - 80:80
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - static_volume:/static
+      - media_volume:/media
 
 volumes:
   postgres_data:
+  static_volume:
+  media_volume:
