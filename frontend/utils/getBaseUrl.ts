@@ -3,7 +3,8 @@ export const getFrontendUrl = () => {
         return "http://localhost:3000";
     }
 
-    return "https://ataman.dev";
+    // return "https://ataman.dev";
+    return "http://localhost"
 };
 
 
@@ -18,6 +19,6 @@ export const getBackendUrl = () => {
         }
     }
 
-    return "https://ataman.dev";
+    // return "https://ataman.dev";
+    return "http://localhost";
 }
-

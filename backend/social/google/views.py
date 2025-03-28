@@ -7,6 +7,9 @@ import json
 import os
 from dotenv import load_dotenv
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 load_dotenv('.env.dev')
 
@@ -17,6 +20,9 @@ load_dotenv('.env.dev')
 def exchange_google_token(request):
     """Handles Google OAuth token exchange."""
     print("################################")
+
+    
+    logger.info("##################### exchange_google_token #####################")
 
     if request.method != "POST":
         return JsonResponse({"error": "Invalid request"}, status=400)
