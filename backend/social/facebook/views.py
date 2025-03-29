@@ -75,8 +75,6 @@ def exchange_facebook_token(request):
         'token': facebook_access_token,
     }
 
-    print("#################### convert_payload", convert_payload)
-
     token_response = requests.post(convert_token_url, data=convert_payload)
     token_data = token_response.json()
 

@@ -7,8 +7,8 @@ import json
 import os
 from dotenv import load_dotenv
 
-import logging
-logger = logging.getLogger(__name__)
+# import logging
+# logger = logging.getLogger(__name__)
 
 
 load_dotenv('.env.dev')
@@ -19,10 +19,8 @@ load_dotenv('.env.dev')
 @csrf_exempt
 def exchange_google_token(request):
     """Handles Google OAuth token exchange."""
-    print("################################")
 
-    
-    logger.info("##################### exchange_google_token #####################")
+    # logger.info("##################### exchange_google_token #####################")
 
     if request.method != "POST":
         return JsonResponse({"error": "Invalid request"}, status=400)
@@ -82,8 +80,13 @@ def exchange_google_token(request):
         "token": google_access_token,
     }
 
+    print("@@@@@@@@@@@@@@@@@@@@@@ convert_payload", convert_payload)
+    print("@@@@@@@@@@@@@@@@@@@@@@ convert_token_url", convert_token_url)
+
     token_response = requests.post(convert_token_url, data=convert_payload)
     token_data = token_response.json()
+
+    print("################ token_data", token_data)
 
     if token_response.status_code != 200:
         return JsonResponse(token_data, status=token_response.status_code)

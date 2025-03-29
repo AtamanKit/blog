@@ -38,7 +38,7 @@ export function AuthHandler({ provider, apiEndpoint }: AuthHandlerProps) {
                     afterLoginUrl = parsed.afterLoginUrl || "/";
                 }
             }
-            
+
             const res = await fetch(`${getBackendUrl()}${apiEndpoint}`, {
                 method: "POST",
                 headers: {
