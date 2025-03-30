@@ -64,8 +64,9 @@ def exchange_facebook_token(request):
     facebook_name = profile_data.get('name')
 
     # Convert Facebook access token to Django token using drf_social_oauth2
-    convert_token_url = request.build_absolute_uri(
-        '/auth/convert-token/')
+    # convert_token_url = request.build_absolute_uri(
+    #     '/auth/convert-token/')
+    convert_token_url = "http://localhost:8000/api/auth/convert-token/"
 
     convert_payload = {
         'grant_type': 'convert_token',

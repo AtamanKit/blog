@@ -78,7 +78,7 @@ def exchange_github_token(request):
         # )
 
         # Ensure email_data is a valid JSON list before iterating
-        if isinstance(email_data, str):  
+        if isinstance(email_data, str):
             try:
                 email_data = json.loads(email_data)  # ✅ Convert string to list
             except json.JSONDecodeError:
@@ -87,14 +87,15 @@ def exchange_github_token(request):
         # Now process the list safely
         github_email = next(
             (email["email"]
-            for email in email_data if isinstance(email, dict) and email.get("primary", False)), None
+             for email in email_data if isinstance(email, dict) and email.get("primary", False)), None
         )
 
         if not github_email:
             return JsonResponse({'error': 'No primary email found in GitHub response'}, status=400)
 
     # Convert GitHub access token to Django token using drf_social_oauth2
-    convert_token_url = request.build_absolute_uri("/auth/convert-token/")
+    # convert_token_url = request.build_absolute_uri("/auth/convert-token/")
+    convert_token_url = "http://localhost:8000/api/auth/convert-token/"
 
     convert_payload = {
         "grant_type": "convert_token",
@@ -121,7 +122,6 @@ def exchange_github_token(request):
     # if github_picture and profile.profile_picture != github_picture:
     #     profile.profile_picture = github_picture
     #     profile.save()
-
 
     # Inject GitHub profile data into the Django token response
     token_data = {
