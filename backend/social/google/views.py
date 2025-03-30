@@ -22,6 +22,7 @@ def exchange_google_token(request):
 
     # logger.info("##################### exchange_google_token #####################")
 
+    print("##################### exchange_google_token #####################")
     if request.method != "POST":
         return JsonResponse({"error": "Invalid request"}, status=400)
 
@@ -70,7 +71,9 @@ def exchange_google_token(request):
     google_name = profile_data.get("name")
 
     # Convert Google access token to Django token using drf_social_oauth2
-    convert_token_url = request.build_absolute_uri("/auth/convert-token/")
+    # convert_token_url = request.build_absolute_uri("/api/auth/convert-token/")
+    convert_token_url = "http://localhost:8000/api/auth/convert-token/"
+
 
     convert_payload = {
         "grant_type": "convert_token",
@@ -83,8 +86,25 @@ def exchange_google_token(request):
     print("@@@@@@@@@@@@@@@@@@@@@@ convert_payload", convert_payload)
     print("@@@@@@@@@@@@@@@@@@@@@@ convert_token_url", convert_token_url)
 
-    token_response = requests.post(convert_token_url, data=convert_payload)
-    token_data = token_response.json()
+    # token_response = requests.post(convert_token_url, data=convert_payload)
+    # token_data = token_response.json()
+
+    # print("################ token_data", token_data)
+
+    try:
+        token_response = requests.post(convert_token_url, data=convert_payload)
+        token_response.raise_for_status()  # will raise for 4xx/5xx
+        token_data = token_response.json()
+        print("################ token_data", token_data)
+    except requests.exceptions.RequestException as e:
+        print("❌ Request to /api/auth/convert-token/ failed:", e)
+        print("❌ Status Code:", token_response.status_code)
+        print("❌ Response Text:", token_response.text)
+        return JsonResponse({"error": "Token exchange failed", "details": token_response.text}, status=token_response.status_code)
+    except ValueError:
+        print("❌ Failed to decode JSON from token response.")
+        print("❌ Response Text:", token_response.text)
+        return JsonResponse({"error": "Invalid response from token endpoint"}, status=500)
 
     print("################ token_data", token_data)
 

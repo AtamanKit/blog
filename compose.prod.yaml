@@ -4,7 +4,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile.prod
     container_name: api-ps
-    command: uv run gunicorn project.wsgi:application --bind 0.0.0.0:8000 --access-logfile - --error-logfile -
+    command: uv run gunicorn project.wsgi:application --bind 0.0.0.0:8000 --access-logfile - --error-logfile --worker-class gevent
     env_file:
       - ./backend/.env.prod
     ports:
