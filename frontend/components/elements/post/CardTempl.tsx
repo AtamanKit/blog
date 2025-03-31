@@ -46,12 +46,17 @@ export function CardTempl({ post, truncFunc }: CardTemplateProps) {
         
       </CardHeader>
       <CardContent>
-        <Image
+        {/* <Image
             src={post.image}
             alt={post.title}
             width={1000}
             height={550}
             className={`w-full ${postList ? "h-48": ""} object-cover mb-4`}
+        /> */}
+        <img
+          src={post.image}
+          alt={post.title}
+          className={`w-full ${postList ? "h-48" : ""} object-cover mb-4`}
         />
         {
           postList

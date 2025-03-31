@@ -8,7 +8,9 @@ import { getBackendUrl } from "@/utils/getBaseUrl";
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  console.log("#######################################pst:", slug);
   const res = await fetch(`${getBackendUrl()}/api/blog/posts/${slug}/`);
+  console.log("#######################################pst:", `${getBackendUrl()}/api/blog/posts/${slug}/`);
   const post = await res.json();
 
   return (
@@ -26,4 +28,3 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     </main>
   );
 }
-
