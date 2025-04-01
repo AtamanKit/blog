@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { CardTempl } from "@/components/elements/post/CardTempl";
+import { CardTemplList } from "@/components/elements/post/CardTemplList";
 import { SkeletonPost } from "@/components/elements/skeletons/SkeletonPost";
 
 // Define the shape of the post object
@@ -58,7 +58,7 @@ export function PostCard({ post }: PostCardProps) {
   // }
 
   return (
-    <CardTempl
+    <CardTemplList
       post={post}
       truncFunc={truncatedDescription}
     />

@@ -24,11 +24,11 @@
 // }
 export const getFrontendUrl = () => {
     if (typeof window !== "undefined") {
-      // ✅ Client-side: use actual browser origin
+      // Client-side: use actual browser origin
       return window.location.origin;
     }
   
-    // ✅ Server-side:
+    // Server-side:
     if (process.env.NODE_ENV === "development") {
       return "http://localhost:3000";
     }
@@ -40,16 +40,27 @@ export const getFrontendUrl = () => {
   
   export const getBackendUrl = () => {
     if (typeof window !== "undefined") {
-      // ✅ Client-side: proxy via Nginx
+      // Client-side: proxy via Nginx
       return window.location.origin;
     }
   
-    // ✅ Server-side:
+    // Server-side:
     if (process.env.NODE_ENV === "development") {
       return "http://localhost:8000";
     }
   
-    // ✅ Inside Docker container
+    // Inside Docker container
     return "http://api-ps:8000";
+  };
+
+
+  export const getMediaUrl = (imagePath: string) => {
+    if (!imagePath) return "";
+  
+    if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+      return `http://localhost:8000${imagePath}`;
+    }
+  
+    return `${getFrontendUrl()}${imagePath}`;
   };
   

@@ -33,6 +33,7 @@ class CommentListCreateView(generics.ListCreateAPIView):
         return Comment.objects.filter(post_id=post_id)
 
     def perform_create(self, serializer):
+        print("##################################")
         post_id = self.kwargs['post_id']
         logger.debug(f"Attempting to create comment for post_id: {post_id}")
         post = Post.objects.get(id=post_id)

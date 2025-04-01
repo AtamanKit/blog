@@ -1,10 +1,9 @@
-"use client";
-
+// "use client";
 
 import * as React from "react";
 
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -35,9 +34,9 @@ interface CardTemplateProps {
 }
 
 
-export function CardTempl({ post, truncFunc }: CardTemplateProps) {
-  const pathname = usePathname();
-  const postList = !pathname.includes("post");
+export function CardTemplList({ post, truncFunc }: CardTemplateProps) {
+  // const pathname = usePathname();
+  // const postList = !pathname.includes("post");
 
   return (
     <Card className="w-full">
@@ -51,25 +50,31 @@ export function CardTempl({ post, truncFunc }: CardTemplateProps) {
             alt={post.title}
             width={1000}
             height={550}
-            className={`w-full ${postList ? "h-48": ""} object-cover mb-4`}
+            className={`w-full "h-48" object-cover mb-4`}
         /> */}
-        <img
-          src={post.image}
-          alt={post.title}
-          className={`w-full ${postList ? "h-48" : ""} object-cover mb-4`}
-        />
-        {
+        <div className="relative w-full h-48 mb-4">
+          <img
+            src={post.image}
+            alt={post.title}
+            className="absolute top-0 left-0 w-full h-full object-cover"
+          />
+        </div>
+        {/* {
           postList
           ? <CardDescription>{truncFunc}</CardDescription>
           : <CardDescription>{post.content}</CardDescription>
-        }
+        } */}
+        <CardDescription>{truncFunc}</CardDescription>
       </CardContent>
       <CardFooter className="flex justify-between">
-        {postList && (
+        {/* {postList && (
           <Link href={`/post/${post.id}`}>
             <Button>More...</Button>
           </Link>
-      )}
+      )} */}
+      <Link href={`/post/${post.id}`}>
+        <Button>More...</Button>
+      </Link>
       </CardFooter>
     </Card>
   )

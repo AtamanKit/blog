@@ -4,7 +4,12 @@ from .models import Post, Comment, UserProfile
 
 
 class PostSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField(required=False)
+    image = serializers.SerializerMethodField()
+
+    def get_image(self, obj):
+        if obj.image:
+            return obj.image.url  # Only relative path like /media/post_images/...
+        return None
 
     class Meta:
         model = Post
