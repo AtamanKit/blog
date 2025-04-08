@@ -79,37 +79,8 @@ def exchange_google_token(request):
     token_response = requests.post(convert_token_url, data=convert_payload)
     token_data = token_response.json()
 
-    # try:
-    #     token_response = requests.post(convert_token_url, data=convert_payload)
-    #     token_response.raise_for_status()  # will raise for 4xx/5xx
-    #     token_data = token_response.json()
-    #     print("################ token_data", token_data)
-    # except requests.exceptions.RequestException as e:
-    #     print("❌ Request to /api/auth/convert-token/ failed:", e)
-    #     print("❌ Status Code:", token_response.status_code)
-    #     print("❌ Response Text:", token_response.text)
-    #     return JsonResponse({"error": "Token exchange failed", "details": token_response.text}, status=token_response.status_code)
-    # except ValueError:
-    #     print("❌ Failed to decode JSON from token response.")
-    #     print("❌ Response Text:", token_response.text)
-    #     return JsonResponse({"error": "Invalid response from token endpoint"}, status=500)
-
-    # print("################ token_data", token_data)
-
     if token_response.status_code != 200:
         return JsonResponse(token_data, status=token_response.status_code)
-
-    # user = User.objects.filter(email=google_email).first()  # ✅ Get the first user safely
-    # user = token_data.get('user')
-
-    # if not user:
-    #     return JsonResponse({'error': 'User not found after authentication'}, status=400)
-
-    # # ✅ Ensure user profile exists and update picture
-    # profile, _ = UserProfile.objects.get_or_create(user=user)
-    # if google_picture and profile.profile_picture != google_picture:
-    #     profile.profile_picture = google_picture
-    #     profile.save()
 
     # Inject Google profile data into the Django token response
     token_data = {

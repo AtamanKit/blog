@@ -1,7 +1,5 @@
-import Image from "next/image";
 import React from "react";
 
-import HelloWorld from "@/components/mains/HelloWorld";
 import HeadBar from "@/components/mains/HeadBar";
 import Posts from "@/components/mains/Posts";
 

@@ -12,9 +12,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 import { getBackendUrl } from "@/utils/getBaseUrl";
-import { useRouter } from "next/navigation";
 
-// Define the shape of the post object
 interface Post {
   id: number;
   title: string;
@@ -23,23 +21,17 @@ interface Post {
   content?: string;
 }
 
-// Define props for the CardComment component
 interface CardCommentProps {
   post: Post;
+  onCommentSuccess: () => void;
 }
 
-export function CardComment({ post }: CardCommentProps) {
+export function CardComment({ post, onCommentSuccess }: CardCommentProps) {
   const [commentText, setCommentText] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
-  const router = useRouter();
 
   const handleCommentSubmit = async () => {
-    if (typeof window === "undefined") {
-      setError("Browser environment not detected.");
-      return;
-    }
-    
     const socialUserString = localStorage.getItem("socialUser");
 
     if (!socialUserString) {
@@ -61,22 +53,36 @@ export function CardComment({ post }: CardCommentProps) {
 
     setLoading(true);
     try {
-      const response = await fetch(`${getBackendUrl()}/api/blog/posts/${post.id}/comments/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${socialUser.accessToken}`,
-        },
-        body: JSON.stringify({ text: commentText }), // Ensure field matches backend
-      });
+      const response = await fetch(
+        `${getBackendUrl()}/api/blog/posts/${post.id}/comments/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${socialUser.accessToken}`,
+          },
+          body: JSON.stringify({ text: commentText }),
+        }
+      );
+
+      const data = await response.json();
+
+       // 🔐 Check if token expired
+      if (response.status === 401 && data?.detail?.includes("expired")) {
+        setError("Session expired. Please log in again.");
+        localStorage.removeItem("socialUser");
+        return;
+      }
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
 
+      await response.json(); // Ensure comment is fully saved before triggering UI update
+
       setCommentText("");
       setError(null);
-      router.refresh(); // Refresh page to load new comment
+      onCommentSuccess(); // 🔁 Trigger comment list refresh in parent
     } catch (err) {
       setError("Failed to submit comment. Please try again!");
       console.error(err);
@@ -88,7 +94,7 @@ export function CardComment({ post }: CardCommentProps) {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Comments</CardTitle>
+        <CardTitle>Leave a Comment</CardTitle>
       </CardHeader>
       <CardContent>
         <Textarea

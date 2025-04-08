@@ -199,6 +199,7 @@ REST_FRAMEWORK = {
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         'drf_social_oauth2.authentication.SocialAuthentication',
     ),
+    'EXCEPTION_HANDLER': 'social.utils.exception_handler.custom_exception_handler',
 }
 
 
