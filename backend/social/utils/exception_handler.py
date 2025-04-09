@@ -1,5 +1,5 @@
 from rest_framework.views import exception_handler
-from oauth2_provider.exceptions import OAuth2Error
+from oauthlib.oauth2.rfc6749.errors import OAuth2Error
 from rest_framework.response import Response
 from rest_framework import status
 

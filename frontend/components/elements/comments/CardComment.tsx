@@ -52,6 +52,7 @@ export function CardComment({ post, onCommentSuccess }: CardCommentProps) {
     }
 
     setLoading(true);
+    
     try {
       const response = await fetch(
         `${getBackendUrl()}/api/blog/posts/${post.id}/comments/`,
@@ -67,6 +68,10 @@ export function CardComment({ post, onCommentSuccess }: CardCommentProps) {
 
       const data = await response.json();
 
+      console.log("######################## UserSocial:", socialUser);
+      console.log("########################## Response data:", data);
+      console.log("########################## Response status:", response.status);
+
        // 🔐 Check if token expired
       if (response.status === 401 && data?.detail?.includes("expired")) {
         setError("Session expired. Please log in again.");
@@ -78,7 +83,7 @@ export function CardComment({ post, onCommentSuccess }: CardCommentProps) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
 
-      await response.json(); // Ensure comment is fully saved before triggering UI update
+      // await response.json(); // Ensure comment is fully saved before triggering UI update
 
       setCommentText("");
       setError(null);
