@@ -126,6 +126,7 @@ def exchange_github_token(request):
     # Inject GitHub profile data into the Django token response
     token_data = {
         "access_token": token_data.get("access_token"),
+        "refresh_token": token_data.get("refresh_token"),
         "email": github_email,
         "name": github_name,
         "picture": github_picture,

@@ -261,3 +261,10 @@ LOGGING = {
         "level": "DEBUG",  # or "INFO" depending on verbosity you want
     },
 }
+
+OAUTH2_PROVIDER = {
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 3600,  # 1 hour
+    'REFRESH_TOKEN_EXPIRE_SECONDS': 86400,  # 24 hours
+    'ROTATE_REFRESH_TOKEN': True,
+    'AUTHORIZATION_CODE_EXPIRE_SECONDS': 600,
+}

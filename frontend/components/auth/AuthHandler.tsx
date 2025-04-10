@@ -56,6 +56,7 @@ export function AuthHandler({ provider, apiEndpoint }: AuthHandlerProps) {
             if (data.access_token && typeof window !== "undefined") {
                 const socialUser = {
                     accessToken: data.access_token,
+                    refreshToken: data.refresh_token || "",
                     email: data.email || "",
                     userName: data.name || "",
                     userPicture: data.picture || "",

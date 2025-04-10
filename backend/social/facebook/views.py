@@ -97,6 +97,7 @@ def exchange_facebook_token(request):
     # Inject Facebook profile data into the Django token response
     token_data = {
         "access_token": token_data.get('access_token'),
+        "refresh_token": token_data.get('refresh_token'),
         "email": facebook_email,
         "name": facebook_name,
         "picture": facebook_picture,

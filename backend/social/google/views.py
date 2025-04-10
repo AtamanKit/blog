@@ -85,6 +85,7 @@ def exchange_google_token(request):
     # Inject Google profile data into the Django token response
     token_data = {
         "access_token": token_data.get('access_token'),
+        "refresh_token": token_data.get('refresh_token'),
         "email": google_email,
         "name": google_name,
         "picture": google_picture,
