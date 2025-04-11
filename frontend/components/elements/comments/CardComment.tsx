@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -26,10 +27,13 @@ interface CardCommentProps {
   onCommentSuccess: () => void;
 }
 
+
 export function CardComment({ post, onCommentSuccess }: CardCommentProps) {
   const [commentText, setCommentText] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const router = useRouter();
+
 
   const handleCommentSubmit = async () => {
     const socialUserString = localStorage.getItem("socialUser");
@@ -52,7 +56,7 @@ export function CardComment({ post, onCommentSuccess }: CardCommentProps) {
     }
 
     setLoading(true);
-    
+
     try {
       const response = await fetch(
         `${getBackendUrl()}/api/blog/posts/${post.id}/comments/`,
@@ -68,14 +72,11 @@ export function CardComment({ post, onCommentSuccess }: CardCommentProps) {
 
       const data = await response.json();
 
-      console.log("######################## UserSocial:", socialUser);
-      console.log("########################## Response data:", data);
-      console.log("########################## Response status:", response.status);
-
-       // 🔐 Check if token expired
+      // 🔐 Check if token expired
       if (response.status === 401 && data?.detail?.includes("expired")) {
         setError("Session expired. Please log in again.");
         localStorage.removeItem("socialUser");
+        router.refresh();
         return;
       }
 

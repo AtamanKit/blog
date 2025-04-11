@@ -26,8 +26,10 @@ urlpatterns = [
     path('api/social/google/', include('social.google.urls')),
     path('api/social/github/', include('social.github.urls')),
     path('api/blog/', include('blog.urls')),
+
+    # drf_social_oauth2 URLs
     re_path(r'^api/auth/', include('drf_social_oauth2.urls', namespace='drf')),
-    # re_path(r'^auth/', include('drf_social_oauth2.urls', namespace='drf')),
+    path("o/", include("oauth2_provider.urls", namespace="oauth2_provider")),
 ]
 
 if settings.DEBUG:

@@ -8,10 +8,6 @@ from oauthlib.oauth2.rfc6749.errors import OAuth2Error
 def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
 
-    print("####################", response)
-    print("####################", exc)
-    print("####################", context)
-
     # Handle expired or invalid tokens from OAuth2
     if isinstance(exc, (OAuth2Error, AuthenticationFailed, NotAuthenticated)):
         return Response(
