@@ -23,7 +23,7 @@ export function getOAuthCredentials(provider: string) {
 
 // This function is used to refresh the access token using the refresh token.
 export async function refreshAccessToken(backendUrl: string, refreshToken: string, clientId: string, clientSecret: string) {
-    const response = await fetch(`${backendUrl}/o/token/`, {
+    const response = await fetch(`${backendUrl}/api/o/token/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -35,6 +35,8 @@ export async function refreshAccessToken(backendUrl: string, refreshToken: strin
             client_secret: clientSecret,
         }),
     });
+
+    console.log("############################ Refresh token response:", response);
 
     if (!response.ok) {
         throw new Error("Failed to refresh token");

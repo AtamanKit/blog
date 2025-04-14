@@ -29,7 +29,7 @@ urlpatterns = [
 
     # drf_social_oauth2 URLs
     re_path(r'^api/auth/', include('drf_social_oauth2.urls', namespace='drf')),
-    path("o/", include("oauth2_provider.urls", namespace="oauth2_provider")),
+    path("api/o/", include("oauth2_provider.urls", namespace="oauth2_provider")),
 ]
 
 if settings.DEBUG:
