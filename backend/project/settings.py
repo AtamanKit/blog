@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'social_django',
     'drf_social_oauth2',
     'django_cleanup',
+    'django_celery_beat',
 
     'blog',
 ]
@@ -263,9 +264,16 @@ LOGGING = {
 }
 
 OAUTH2_PROVIDER = {
-    'ACCESS_TOKEN_EXPIRE_SECONDS': 30,  # 1 min
-    'REFRESH_TOKEN_EXPIRE_SECONDS': 120,  # 2 min
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 3600,  # 1 hour
+    'REFRESH_TOKEN_EXPIRE_SECONDS': 1209600,  # 14 days
     'ROTATE_REFRESH_TOKEN': True,
     'AUTHORIZATION_CODE_EXPIRE_SECONDS': 600,
     'OAUTH2_VALIDATOR_CLASS': 'social.utils.validators.ExpiringRefreshTokenValidator',
 }
+
+# Celery settings
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"

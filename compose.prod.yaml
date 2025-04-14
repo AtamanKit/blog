@@ -20,6 +20,36 @@ services:
     depends_on:
       - db
 
+  redis:
+    image: redis:7-alpine
+    container_name: redis-ps
+    ports:
+      - "6379:6379"
+
+  celery:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    container_name: celery-ps
+    command: uv run celery -A project worker --loglevel=info
+    depends_on:
+      - api
+      - redis
+    env_file:
+      - ./backend/.env.prod
+
+  celery-beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    container_name: celery-beat-ps
+    command: uv run celery -A project beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    depends_on:
+      - api
+      - redis
+    env_file:
+      - ./backend/.env.prod
+
   web:
     build:
       context: ./frontend
