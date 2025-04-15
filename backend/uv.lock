@@ -31,6 +31,7 @@ dependencies = [
     { name = "celery" },
     { name = "django" },
     { name = "django-celery-beat" },
+    { name = "django-ckeditor-5" },
     { name = "django-cleanup" },
     { name = "django-cors-headers" },
     { name = "djangorestframework" },
@@ -48,6 +49,7 @@ requires-dist = [
     { name = "celery", specifier = ">=5.5.1" },
     { name = "django", specifier = ">=5.1.6" },
     { name = "django-celery-beat", specifier = ">=2.7.0" },
+    { name = "django-ckeditor-5", specifier = ">=0.2.17" },
     { name = "django-cleanup", specifier = ">=9.0.0" },
     { name = "django-cors-headers", specifier = ">=4.7.0" },
     { name = "djangorestframework", specifier = ">=3.15.2" },
@@ -277,6 +279,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/03/8f/8a18f234173001bd7a7d63826d2d7f456b38031c892514d27c0f7aea10be/django_celery_beat-2.7.0.tar.gz", hash = "sha256:8482034925e09b698c05ad61c36ed2a8dbc436724a3fe119215193a4ca6dc967", size = 163472 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/29/f8/f5a25472222b19258c3a53ce71c4efd171a12ab3c988bb3026dec0522a64/django_celery_beat-2.7.0-py3-none-any.whl", hash = "sha256:851c680d8fbf608ca5fecd5836622beea89fa017bc2b3f94a5b8c648c32d84b1", size = 94097 },
+]
+
+[[package]]
+name = "django-ckeditor-5"
+version = "0.2.17"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "pillow" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/11/11/361508b0bb69f53c9bea0d5b18d1e8f5ac9efc8e3df0009ef0565458e0dd/django_ckeditor_5-0.2.17.tar.gz", hash = "sha256:ce1ab6e21010d6742618275e237d042b1b15645dda3258f7e960b57e93268caf", size = 2599298 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6e/f0/49d44536350321209324daf9df8ec788d2f65bea890c15f4be289cedadc5/django_ckeditor_5-0.2.17-py3-none-any.whl", hash = "sha256:16d4113bad7a80a82046c461a6b5bd03592f5215dc1d10d85ee9481d9f6257b7", size = 2699183 },
 ]
 
 [[package]]
