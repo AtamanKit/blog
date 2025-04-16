@@ -7,7 +7,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='post_images', blank=True, null=True)
-    content = CKEditor5Field('Text', config_name='extends')
+    content = CKEditor5Field(config_name='extends')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
