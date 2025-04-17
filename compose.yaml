@@ -28,11 +28,8 @@ services:
     container_name: db-ps
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: blog
-      POSTGRES_USER: bloguser
-      POSTGRES_PASSWORD: blogpassword
-      POSTGRES_HOST_AUTH_METHOD: trust
+    env_file:
+      - ./backend/.env.dev
 
 volumes:
   postgres_data:

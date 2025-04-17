@@ -20,7 +20,7 @@ export default function Posts() {
     const [posts, setPosts] = useState<Post[]>([]);
 
     useEffect(() => {
-        fetch(`${getBackendUrl()}/api/blog/posts`)
+        fetch(`${getBackendUrl()}/api/blog/posts/`)
             .then((res) => res.json())
             .then((data) => setPosts(data));
     }, []);

@@ -39,14 +39,14 @@ export const getFrontendUrl = () => {
 
   
   export const getBackendUrl = () => {
-    if (typeof window !== "undefined") {
-      // Client-side: proxy via Nginx
-      return window.location.origin;
-    }
-  
     // Server-side:
     if (process.env.NODE_ENV === "development") {
       return "http://localhost:8000";
+    }
+    
+    if (typeof window !== "undefined") {
+      // Client-side: proxy via Nginx
+      return window.location.origin;
     }
   
     // Inside Docker container
