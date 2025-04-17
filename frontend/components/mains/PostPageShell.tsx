@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 // `ssr: false` disables server-side rendering for this component
 // This is necessary because PostPageClientWrapper uses hooks like useState/useEffect
 const PostPageClientWrapper = dynamic(
-  () => import("@/components/elements/comments/PostPageClientWrapper"),
+  () => import("@/components/elements/post/PostPageClientWrapper"),
   { ssr: false }
 );
 

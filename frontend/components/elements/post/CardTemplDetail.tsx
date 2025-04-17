@@ -42,7 +42,7 @@ export function CardTemplDetail({ post }: CardTemplateProps) {
     <Card className="w-full">
       <CardHeader>
         <CardTitle>{post.title}</CardTitle>
-        
+
       </CardHeader>
       <CardContent>
         {/* <Image
@@ -62,7 +62,12 @@ export function CardTemplDetail({ post }: CardTemplateProps) {
           ? <CardDescription>{truncFunc}</CardDescription>
           : <CardDescription>{post.content}</CardDescription>
         } */}
-        <CardDescription>{post.content}</CardDescription>
+        <CardDescription>
+          <div
+            className="prose dark:prose-invert max-w-none"
+            dangerouslySetInnerHTML={{ __html: post.content || "" }}
+          />
+        </CardDescription>
       </CardContent>
       {/* <CardFooter className="flex justify-between">
         {postList && (
