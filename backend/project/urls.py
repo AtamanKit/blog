@@ -30,6 +30,7 @@ urlpatterns = [
     # drf_social_oauth2 URLs
     re_path(r'^api/auth/', include('drf_social_oauth2.urls', namespace='drf')),
     path("api/o/", include("oauth2_provider.urls", namespace="oauth2_provider")),
+    path("ckeditor5/", include('django_ckeditor_5.urls')),
 ]
 
 if settings.DEBUG:
