@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django_ckeditor_5.fields import CKEditor5Field
+# from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Post(models.Model):
