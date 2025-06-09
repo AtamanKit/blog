@@ -233,9 +233,17 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# CORS settings
 CORS_ORIGIN_ALLOW_ALL = os.getenv(
     'CORS_ORIGIN_ALLOW_ALL', 'True').lower() in ('true', '1')
 
+# CSRF settings
+CSRF_COOKIE_SECURE = os.getenv(
+    'CSRF_COOKIE_SECURE', 'True').lower() in ('true', '1')
+SESSION_COOKIE_SECURE = os.getenv(
+    'SESSION_COOKIE_SECURE', 'True').lower() in ('true', '1')
+CSRF_TRUSTED_ORIGINS = os.getenv(
+    'CSRF_TRUSTED_ORIGINS', "").split(",") if os.getenv('CSRF_TRUSTED_ORIGINS') else []
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',

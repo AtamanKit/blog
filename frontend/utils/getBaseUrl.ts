@@ -33,8 +33,8 @@ export const getFrontendUrl = () => {
       return "http://localhost:3000";
     }
   
-    return "http://localhost";
-    // return "https://ataman.dev";
+    // return "http://localhost";
+    return "https://ataman.dev";
   };
 
   
