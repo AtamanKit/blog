@@ -83,10 +83,22 @@ services:
       - web
     ports:
       - 80:80
+      - 443:443
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certbot/etc:/etc/letsencrypt:ro
       - static_volume:/static
       - media_volume:/media
+
+      #  certbot:
+      #    image: certbot/certbot
+      #    container_name: certbot-ps
+      #    entrypoint: ["sleep", "infinity"]
+      #    ports:
+      #      - "80:80"
+      #    volumes:
+      #      - ./certbot/etc:/etc/letsencrypt
+      #      - ./certbot/var:/var/lib/letsencrypt
 
 volumes:
   postgres_data:
