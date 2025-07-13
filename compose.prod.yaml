@@ -24,8 +24,11 @@ services:
   redis:
     image: redis:7-alpine
     container_name: redis-ps
-    ports:
-      - "6379:6379"
+    command: ["redis-server", "/etc/redis/redis.conf"]
+    #ports:
+    #  - "6379:6379"
+    volumes:
+      - ./redis/redis.conf:/etc/redis/redis.conf
 
   celery:
     build:
